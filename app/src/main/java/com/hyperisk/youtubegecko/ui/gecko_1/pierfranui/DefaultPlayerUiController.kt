@@ -1,4 +1,4 @@
-package com.hyperisk.youtubegecko.ui.home.pierfranui
+package com.hyperisk.youtubegecko.ui.gecko_1.pierfranui
 
 import android.content.Intent
 import android.graphics.drawable.Drawable
@@ -11,16 +11,16 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.hyperisk.youtubegecko.R
-import com.hyperisk.youtubegecko.ui.home.pierfranplayer.PlayerConstants
-import com.hyperisk.youtubegecko.ui.home.pierfranplayer.YouTubePlayer
-import com.hyperisk.youtubegecko.ui.home.pierfranplayer.listeners.YouTubePlayerFullScreenListener
-import com.hyperisk.youtubegecko.ui.home.pierfranplayer.listeners.YouTubePlayerListener
-import com.hyperisk.youtubegecko.ui.home.pierfranplayer.views.LegacyYouTubePlayerView
-import com.hyperisk.youtubegecko.ui.home.pierfranui.menu.YouTubePlayerMenu
-import com.hyperisk.youtubegecko.ui.home.pierfranui.menu.defaultMenu.DefaultYouTubePlayerMenu
-import com.hyperisk.youtubegecko.ui.home.pierfranui.utils.FadeViewHelper
-import com.hyperisk.youtubegecko.ui.home.pierfranui.views.YouTubePlayerSeekBar
-import com.hyperisk.youtubegecko.ui.home.pierfranui.views.YouTubePlayerSeekBarListener
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.PlayerConstants
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.YouTubePlayer
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.listeners.YouTubePlayerFullScreenListener
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.listeners.YouTubePlayerListener
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.views.LegacyYouTubePlayerView
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranui.menu.YouTubePlayerMenu
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranui.menu.defaultMenu.DefaultYouTubePlayerMenu
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranui.utils.FadeViewHelper
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranui.views.YouTubePlayerSeekBar
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranui.views.YouTubePlayerSeekBarListener
 
 internal class DefaultPlayerUiController(private val youTubePlayerView: LegacyYouTubePlayerView, private val youTubePlayer: YouTubePlayer) : PlayerUiController,
     YouTubePlayerListener, YouTubePlayerFullScreenListener, YouTubePlayerSeekBarListener {

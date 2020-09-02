@@ -1,4 +1,4 @@
-package com.hyperisk.youtubegecko.ui.home.pierfranplayer.views
+package com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.views
 
 import android.content.Context
 import android.util.AttributeSet

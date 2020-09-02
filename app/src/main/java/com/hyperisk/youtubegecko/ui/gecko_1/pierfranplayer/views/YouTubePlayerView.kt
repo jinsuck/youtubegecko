@@ -1,4 +1,4 @@
-package com.hyperisk.youtubegecko.ui.home.pierfranplayer.views
+package com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.views
 
 import android.content.Context
 import android.util.AttributeSet
@@ -10,15 +10,15 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.hyperisk.youtubegecko.R
-import com.hyperisk.youtubegecko.ui.home.pierfranplayer.YouTubePlayer
-import com.hyperisk.youtubegecko.ui.home.pierfranplayer.listeners.AbstractYouTubePlayerListener
-import com.hyperisk.youtubegecko.ui.home.pierfranplayer.listeners.YouTubePlayerCallback
-import com.hyperisk.youtubegecko.ui.home.pierfranplayer.listeners.YouTubePlayerFullScreenListener
-import com.hyperisk.youtubegecko.ui.home.pierfranplayer.listeners.YouTubePlayerListener
-import com.hyperisk.youtubegecko.ui.home.pierfranplayer.options.IFramePlayerOptions
-import com.hyperisk.youtubegecko.ui.home.pierfranplayer.utils.FullScreenHelper
-import com.hyperisk.youtubegecko.ui.home.pierfranplayer.utils.loadOrCueVideo
-import com.hyperisk.youtubegecko.ui.home.pierfranui.PlayerUiController
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.YouTubePlayer
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.listeners.AbstractYouTubePlayerListener
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.listeners.YouTubePlayerCallback
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.listeners.YouTubePlayerFullScreenListener
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.listeners.YouTubePlayerListener
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.options.IFramePlayerOptions
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.utils.FullScreenHelper
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.utils.loadOrCueVideo
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranui.PlayerUiController
 
 
 class YouTubePlayerView(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0):

@@ -1,4 +1,4 @@
-package com.hyperisk.youtubegecko.ui.home.pierfranplayer.views
+package com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.views
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -11,11 +11,11 @@ import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import com.hyperisk.youtubegecko.R
-import com.hyperisk.youtubegecko.ui.home.pierfranplayer.YouTubePlayer
-import com.hyperisk.youtubegecko.ui.home.pierfranplayer.YouTubePlayerBridge
-import com.hyperisk.youtubegecko.ui.home.pierfranplayer.listeners.YouTubePlayerListener
-import com.hyperisk.youtubegecko.ui.home.pierfranplayer.options.IFramePlayerOptions
-import com.hyperisk.youtubegecko.ui.home.pierfranplayer.utils.Utils
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.YouTubePlayer
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.YouTubePlayerBridge
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.listeners.YouTubePlayerListener
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.options.IFramePlayerOptions
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.utils.Utils
 import java.util.*
 
 /**

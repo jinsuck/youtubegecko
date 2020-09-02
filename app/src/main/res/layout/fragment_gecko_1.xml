@@ -6,4 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".ui.gecko_1.Gecko1Fragment">
 
+    <com.hyperisk.youtubegecko.ui.home.pierfranplayer.views.YouTubePlayerView
+        android:id="@+id/youtube_player_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+
+        app:autoPlay="true"
+        app:useWebUi="true"
+        app:videoId="S0Q4gqBUs7c" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

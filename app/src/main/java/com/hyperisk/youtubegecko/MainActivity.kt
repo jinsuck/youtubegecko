@@ -8,6 +8,14 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 
+/*
+APK signing
+file: app/signing_store
+store password: gecko_password
+key alias: gecko_key
+key password: gecko_key_password
+ */
+
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

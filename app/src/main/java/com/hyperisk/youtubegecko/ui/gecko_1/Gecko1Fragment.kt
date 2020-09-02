@@ -22,10 +22,6 @@ class Gecko1Fragment : Fragment() {
         viewModel =
                 ViewModelProviders.of(this).get(Gecko1ViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_gecko_1, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        viewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
         return root
     }
 }

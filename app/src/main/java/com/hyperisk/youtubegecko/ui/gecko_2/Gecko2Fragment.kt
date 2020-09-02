@@ -23,9 +23,9 @@ class Gecko2Fragment : Fragment() {
                 ViewModelProviders.of(this).get(Gecko2ViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_gecko_2, container, false)
         val textView: TextView = root.findViewById(R.id.text_notifications)
-        viewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+//        viewModel.text.observe(viewLifecycleOwner, Observer {
+//            textView.text = it
+//        })
         return root
     }
 }

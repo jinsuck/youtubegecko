@@ -13,8 +13,18 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
 
-        app:autoPlay="true"
+        app:autoPlay="false"
         app:useWebUi="true"
         app:videoId="S0Q4gqBUs7c" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/youtube_player_view"
+        android:layout_marginTop="20dp"
+        android:textSize="14sp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/cardview_dark_background"
+        android:text="using pierfranplayer YouTubePlayerView"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

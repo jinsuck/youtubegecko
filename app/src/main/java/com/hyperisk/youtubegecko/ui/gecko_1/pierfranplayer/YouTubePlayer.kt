@@ -1,11 +1,15 @@
 package com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer
 
 import com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.listeners.YouTubePlayerListener
+import com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.options.IFramePlayerOptions
 
 /**
  * Use this interface to control the playback of YouTube videos and to listen to their events.
  */
 interface YouTubePlayer {
+
+    fun initialize(initListener: (YouTubePlayer) -> Unit, playerOptions: IFramePlayerOptions?)
+
     /**
      * Loads and automatically plays the video.
      * @param videoId id of the video

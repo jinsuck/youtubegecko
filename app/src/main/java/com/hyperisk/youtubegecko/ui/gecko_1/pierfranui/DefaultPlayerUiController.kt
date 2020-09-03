@@ -50,7 +50,7 @@ internal class DefaultPlayerUiController(private val youTubePlayerView: LegacyYo
 
     private val youtubePlayerSeekBar: YouTubePlayerSeekBar
 
-    private var onFullScreenButtonListener: View.OnClickListener
+//    private var onFullScreenButtonListener: View.OnClickListener
     private var onMenuButtonClickListener: View.OnClickListener
 
     private val fadeControlsContainer: FadeViewHelper
@@ -62,7 +62,7 @@ internal class DefaultPlayerUiController(private val youTubePlayerView: LegacyYo
 
     init {
 
-        val controlsView = View.inflate(youTubePlayerView.context, R.layout.ayp_default_player_ui, youTubePlayerView)
+        val controlsView = View.inflate(youTubePlayerView.context, R.layout.ayp_default_player_ui_gecko1, youTubePlayerView)
 
         youTubePlayerMenu = DefaultYouTubePlayerMenu(youTubePlayerView.context)
 
@@ -86,7 +86,7 @@ internal class DefaultPlayerUiController(private val youTubePlayerView: LegacyYo
 
         fadeControlsContainer = FadeViewHelper(controlsContainer)
 
-        onFullScreenButtonListener = View.OnClickListener { youTubePlayerView.toggleFullScreen() }
+//        onFullScreenButtonListener = View.OnClickListener { youTubePlayerView.toggleFullScreen() }
         onMenuButtonClickListener = View.OnClickListener { youTubePlayerMenu.show(menuButton) }
 
         initClickListeners()
@@ -99,7 +99,7 @@ internal class DefaultPlayerUiController(private val youTubePlayerView: LegacyYo
         youtubePlayerSeekBar.youtubePlayerSeekBarListener = this
         panel.setOnClickListener { fadeControlsContainer.toggleVisibility() }
         playPauseButton.setOnClickListener { onPlayButtonPressed() }
-        fullScreenButton.setOnClickListener { onFullScreenButtonListener.onClick(fullScreenButton) }
+//        fullScreenButton.setOnClickListener { onFullScreenButtonListener.onClick(fullScreenButton) }
         menuButton.setOnClickListener { onMenuButtonClickListener.onClick(menuButton) }
     }
 
@@ -210,10 +210,10 @@ internal class DefaultPlayerUiController(private val youTubePlayerView: LegacyYo
         return this
     }
 
-    override fun setFullScreenButtonClickListener(customFullScreenButtonClickListener: View.OnClickListener): PlayerUiController {
-        onFullScreenButtonListener = customFullScreenButtonClickListener
-        return this
-    }
+//    override fun setFullScreenButtonClickListener(customFullScreenButtonClickListener: View.OnClickListener): PlayerUiController {
+//        onFullScreenButtonListener = customFullScreenButtonClickListener
+//        return this
+//    }
 
     private fun onPlayButtonPressed() {
         if (isPlaying)

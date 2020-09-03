@@ -48,7 +48,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
-//    implementation "org.mozilla.geckoview:geckoview:80.0.20200831163820"
+    implementation "org.mozilla.geckoview:geckoview:80.0.20200831163820"
 
     // for bottom nav
     implementation 'androidx.navigation:navigation-fragment:2.3.0'

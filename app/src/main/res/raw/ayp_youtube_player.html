@@ -6,9 +6,14 @@
             width: 100%;
             margin: 0;
             padding: 0;
-            background-color: #000000;
+            background-color: #306030;
             overflow: hidden;
             position: fixed;
+        }
+
+        h2 {
+            color: #889988;
+            font-size: 20px;
         }
     </style>
 
@@ -18,131 +23,197 @@
     </head>
 
     <body>
+        <h2 id="alert123"> ALERT!!! </h2>
         <div id="youTubePlayerDOM"></div>
     </body>
 
     <script type="text/javascript">
         
-        var UNSTARTED = "UNSTARTED";
-        var ENDED = "ENDED";
-        var PLAYING = "PLAYING";
-        var PAUSED = "PAUSED";
-        var BUFFERING = "BUFFERING";
-        var CUED = "CUED";
-        
-        var YouTubePlayerBridge = window.YouTubePlayerBridge;
-    	var player;
+<!--        var UNSTARTED = "UNSTARTED";-->
+<!--        var ENDED = "ENDED";-->
+<!--        var PLAYING = "PLAYING";-->
+<!--        var PAUSED = "PAUSED";-->
+<!--        var BUFFERING = "BUFFERING";-->
+<!--        var CUED = "CUED";-->
+<!--        -->
+<!--        var YouTubePlayerBridge = window.YouTubePlayerBridge;-->
+<!--    	var player;-->
 
-        var timerId;
+<!--        var timerId;-->
 
-    	function onYouTubeIframeAPIReady() {
+<!--    	function onYouTubeIframeAPIReady() {-->
 
-            YouTubePlayerBridge.sendYouTubeIFrameAPIReady();
-            
-    		player = new YT.Player('youTubePlayerDOM', {
-    			
-                height: '100%',
-    			width: '100%',
-    			
-                events: {
-    				onReady: function(event) { YouTubePlayerBridge.sendReady() },
-    				onStateChange: function(event) { sendPlayerStateChange(event.data) },
-    				onPlaybackQualityChange: function(event) { YouTubePlayerBridge.sendPlaybackQualityChange(event.data) },
-    				onPlaybackRateChange: function(event) { YouTubePlayerBridge.sendPlaybackRateChange(event.data) },
-    				onError: function(error) { YouTubePlayerBridge.sendError(error.data) },
-    				onApiChange: function(event) { YouTubePlayerBridge.sendApiChange() }
-    			},
+<!--            YouTubePlayerBridge.sendYouTubeIFrameAPIReady();-->
+<!--            -->
+<!--    		player = new YT.Player('youTubePlayerDOM', {-->
+<!--    			-->
+<!--                height: '100%',-->
+<!--    			width: '100%',-->
+<!--    			-->
+<!--                events: {-->
+<!--    				onReady: function(event) { YouTubePlayerBridge.sendReady() },-->
+<!--    				onStateChange: function(event) { sendPlayerStateChange(event.data) },-->
+<!--    				onPlaybackQualityChange: function(event) { YouTubePlayerBridge.sendPlaybackQualityChange(event.data) },-->
+<!--    				onPlaybackRateChange: function(event) { YouTubePlayerBridge.sendPlaybackRateChange(event.data) },-->
+<!--    				onError: function(error) { YouTubePlayerBridge.sendError(error.data) },-->
+<!--    				onApiChange: function(event) { YouTubePlayerBridge.sendApiChange() }-->
+<!--    			},-->
 
-    			playerVars: <<injectedPlayerVars>>
-                
-    		});
-    	}
+<!--    			playerVars: <<injectedPlayerVars>>-->
+<!--                -->
+<!--    		});-->
+<!--    	}-->
 
-    	function sendPlayerStateChange(playerState) {
-            clearTimeout(timerId);
+<!--    	function sendPlayerStateChange(playerState) {-->
+<!--            clearTimeout(timerId);-->
 
-            switch (playerState) {
-            	case YT.PlayerState.UNSTARTED:
-                    sendStateChange(UNSTARTED);
-                    return;
+<!--            switch (playerState) {-->
+<!--            	case YT.PlayerState.UNSTARTED:-->
+<!--                    sendStateChange(UNSTARTED);-->
+<!--                    return;-->
 
-            	case YT.PlayerState.ENDED:
-                    sendStateChange(ENDED);
-                    return;
+<!--            	case YT.PlayerState.ENDED:-->
+<!--                    sendStateChange(ENDED);-->
+<!--                    return;-->
 
-                case YT.PlayerState.PLAYING:
-                    sendStateChange(PLAYING);
-                    
-                    startSendCurrentTimeInterval();
-                    sendVideoData(player);
-                    return;
+<!--                case YT.PlayerState.PLAYING:-->
+<!--                    sendStateChange(PLAYING);-->
+<!--                    -->
+<!--                    startSendCurrentTimeInterval();-->
+<!--                    sendVideoData(player);-->
+<!--                    return;-->
 
-                case YT.PlayerState.PAUSED:
-                    sendStateChange(PAUSED);
-                    return;
+<!--                case YT.PlayerState.PAUSED:-->
+<!--                    sendStateChange(PAUSED);-->
+<!--                    return;-->
 
-                case YT.PlayerState.BUFFERING:
-                    sendStateChange(BUFFERING);
-                    return;
+<!--                case YT.PlayerState.BUFFERING:-->
+<!--                    sendStateChange(BUFFERING);-->
+<!--                    return;-->
 
-                case YT.PlayerState.CUED:
-                    sendStateChange(CUED);
-                    return;
-            }
+<!--                case YT.PlayerState.CUED:-->
+<!--                    sendStateChange(CUED);-->
+<!--                    return;-->
+<!--            }-->
 
-            function sendVideoData(player) {
-                var videoDuration = player.getDuration();
+<!--            function sendVideoData(player) {-->
+<!--                var videoDuration = player.getDuration();-->
 
-                YouTubePlayerBridge.sendVideoDuration(videoDuration);
-            }
+<!--                YouTubePlayerBridge.sendVideoDuration(videoDuration);-->
+<!--            }-->
 
-            function sendStateChange(newState) {
-                YouTubePlayerBridge.sendStateChange(newState)
-            }
+<!--            function sendStateChange(newState) {-->
+<!--                YouTubePlayerBridge.sendStateChange(newState)-->
+<!--            }-->
 
-            function startSendCurrentTimeInterval() {
-                timerId = setInterval(function() {
-                    YouTubePlayerBridge.sendVideoCurrentTime( player.getCurrentTime() )
-                    YouTubePlayerBridge.sendVideoLoadedFraction( player.getVideoLoadedFraction() )
-                }, 100 );
-            }
+<!--            function startSendCurrentTimeInterval() {-->
+<!--                timerId = setInterval(function() {-->
+<!--                    YouTubePlayerBridge.sendVideoCurrentTime( player.getCurrentTime() )-->
+<!--                    YouTubePlayerBridge.sendVideoLoadedFraction( player.getVideoLoadedFraction() )-->
+<!--                }, 100 );-->
+<!--            }-->
+<!--        }-->
+
+<!--        // JAVA to WEB functions-->
+
+<!--        function seekTo(startSeconds) {        	-->
+<!--        	player.seekTo(startSeconds, true);-->
+<!--        }-->
+
+<!--        function pauseVideo() {-->
+<!--        	player.pauseVideo();-->
+<!--        }-->
+
+<!--        function playVideo() {-->
+<!--        	player.playVideo();-->
+<!--        }-->
+
+<!--        function loadVideo(videoId, startSeconds) {-->
+<!--            player.loadVideoById(videoId, startSeconds);-->
+<!--            YouTubePlayerBridge.sendVideoId(videoId);-->
+<!--        }-->
+
+<!--        function cueVideo(videoId, startSeconds) {-->
+<!--            player.cueVideoById(videoId, startSeconds);-->
+<!--            YouTubePlayerBridge.sendVideoId(videoId);-->
+<!--        }-->
+
+<!--        function mute() {-->
+<!--            player.mute();-->
+<!--        }-->
+
+<!--        function unMute() {-->
+<!--            player.unMute();-->
+<!--        }-->
+
+<!--        function setVolume(volumePercent) {-->
+<!--            player.setVolume(volumePercent);-->
+<!--        }-->
+
+        function showAlert111() {
+            document.getElementById('alert123').innerHTML = "YYYYYYYYYYES 111";
         }
 
-        // JAVA to WEB functions
-
-        function seekTo(startSeconds) {        	
-        	player.seekTo(startSeconds, true);
-        }
-
-        function pauseVideo() {
-        	player.pauseVideo();
-        }
-
-        function playVideo() {
-        	player.playVideo();
-        }
-
-        function loadVideo(videoId, startSeconds) {
-            player.loadVideoById(videoId, startSeconds);
-            YouTubePlayerBridge.sendVideoId(videoId);
-        }
-
-        function cueVideo(videoId, startSeconds) {
-            player.cueVideoById(videoId, startSeconds);
-            YouTubePlayerBridge.sendVideoId(videoId);
-        }
-
-        function mute() {
-            player.mute();
-        }
-
-        function unMute() {
-            player.unMute();
-        }
-
-        function setVolume(volumePercent) {
-            player.setVolume(volumePercent);
-        }
-
+        showAlert111();
     </script>
 </html>
+
+<!-- in Ego: https://bitbucket.org/imvu/ego-app-builder/src/master/modules/webview/core/android/assets/messaging/youtube_player_template.html
+
+<!DOCTYPE html>
+<head>
+    <style type="text/css">
+        * {
+            border: 0;
+            padding: 0;
+            margin: 0;
+            outline: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="player"></div>
+<script>
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+                               enablejsapi: '1',
+                               videoId: '%marker',
+                               playerVars: {autoplay: 1, controls : %marker, loop : %marker},
+                               events: {'onReady': onPlayerReady, 'onStateChange': onPlayerStateChange,
+                                        'onError': onPlayerError, 'onPlaybackQualityChange': onPlayerPlaybackQualityChange, 'onPlaybackRateChanged':onPlayerPlaybackRateChanged}
+                               });
+    }
+
+    function onPlayerReady(event) {
+        window.top.postMessage({'event':'playerReady'}, '*');
+    }
+
+    function onPlayerStateChange(event) {
+        window.top.postMessage({'event': 'playerStateChange', 'info': event.data}, '*');
+    }
+
+    function onPlayerError(event) {
+        window.top.postMessage({'event' : 'playerError', 'info': event.data}, '*');
+    }
+
+    function onPlayerPlaybackQualityChange(event) {
+        window.top.postMessage({'event' : 'playbackQualityChange', 'info': event.data}, '*');
+    }
+
+    function onPlayerPlaybackRateChanged(event) {
+        window.top.postMessage({'event' : 'playbackRateChange', 'info': event.data}, '*');
+    }
+</script>
+</body>
+</html>
+
+-->

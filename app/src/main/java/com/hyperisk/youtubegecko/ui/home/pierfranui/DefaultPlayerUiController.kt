@@ -62,7 +62,7 @@ internal class DefaultPlayerUiController(private val youTubePlayerView: LegacyYo
 
     init {
 
-        val controlsView = View.inflate(youTubePlayerView.context, R.layout.ayp_default_player_ui, youTubePlayerView)
+        val controlsView = View.inflate(youTubePlayerView.context, R.layout.ayp_default_player_ui_home, youTubePlayerView)
 
         youTubePlayerMenu = DefaultYouTubePlayerMenu(youTubePlayerView.context)
 

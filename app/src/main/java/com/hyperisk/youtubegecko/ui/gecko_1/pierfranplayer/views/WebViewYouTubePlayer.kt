@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
@@ -16,6 +17,7 @@ import com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.YouTubePlayerBridge
 import com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.listeners.YouTubePlayerListener
 import com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.options.IFramePlayerOptions
 import com.hyperisk.youtubegecko.ui.gecko_1.pierfranplayer.utils.Utils
+import org.mozilla.geckoview.GeckoView
 import java.util.*
 
 /**
@@ -29,9 +31,7 @@ internal class WebViewYouTubePlayer constructor(context: Context, attrs: Attribu
     private val youTubePlayerListeners = HashSet<YouTubePlayerListener>()
     private val mainThreadHandler: Handler = Handler(Looper.getMainLooper())
 
-    internal var isBackgroundPlaybackEnabled = false
-
-    internal fun initialize(initListener: (YouTubePlayer) -> Unit, playerOptions: IFramePlayerOptions?) {
+    override fun initialize(initListener: (YouTubePlayer) -> Unit, playerOptions: IFramePlayerOptions?) {
         youTubePlayerInitListener = initListener
         initWebView(playerOptions ?: IFramePlayerOptions.default)
     }
@@ -41,14 +41,21 @@ internal class WebViewYouTubePlayer constructor(context: Context, attrs: Attribu
     override fun getInstance(): YouTubePlayer = this
 
     override fun loadVideo(videoId: String, startSeconds: Float) {
-        mainThreadHandler.post { loadUrl("javascript:loadVideo('$videoId', $startSeconds)") }
+        Log.i("WebViewYouTubePlayer", "loadVideo")
+        mainThreadHandler.post { loadUrl(
+            "javascript:loadVideo('$videoId', $startSeconds)")
+        }
+        mainThreadHandler.post { loadUrl(
+            "javascript:showAlert111()")
+        }
     }
 
     override fun cueVideo(videoId: String, startSeconds: Float) {
-        mainThreadHandler.post { loadUrl("javascript:cueVideo('$videoId', $startSeconds)") }
+//        mainThreadHandler.post { loadUrl("javascript:cueVideo('$videoId', $startSeconds)") }
     }
 
     override fun play() {
+        Log.i("WebViewYouTubePlayer", "play")
         mainThreadHandler.post { loadUrl("javascript:playVideo()") }
     }
 
@@ -57,21 +64,21 @@ internal class WebViewYouTubePlayer constructor(context: Context, attrs: Attribu
     }
 
     override fun mute() {
-        mainThreadHandler.post { loadUrl("javascript:mute()") }
+//        mainThreadHandler.post { loadUrl("javascript:mute()") }
     }
 
     override fun unMute() {
-        mainThreadHandler.post { loadUrl("javascript:unMute()") }
+//        mainThreadHandler.post { loadUrl("javascript:unMute()") }
     }
 
     override fun setVolume(volumePercent: Int) {
-        require(!(volumePercent < 0 || volumePercent > 100)) { "Volume must be between 0 and 100" }
-
-        mainThreadHandler.post { loadUrl("javascript:setVolume($volumePercent)") }
+//        require(!(volumePercent < 0 || volumePercent > 100)) { "Volume must be between 0 and 100" }
+//
+//        mainThreadHandler.post { loadUrl("javascript:setVolume($volumePercent)") }
     }
 
     override fun seekTo(time: Float) {
-        mainThreadHandler.post { loadUrl("javascript:seekTo($time)") }
+//        mainThreadHandler.post { loadUrl("javascript:seekTo($time)") }
     }
 
     override fun destroy() {
@@ -95,31 +102,33 @@ internal class WebViewYouTubePlayer constructor(context: Context, attrs: Attribu
     @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView(playerOptions: IFramePlayerOptions) {
         settings.javaScriptEnabled = true
-        settings.mediaPlaybackRequiresUserGesture = false
-        settings.cacheMode = WebSettings.LOAD_NO_CACHE
+//        settings.mediaPlaybackRequiresUserGesture = false
+//        settings.cacheMode = WebSettings.LOAD_NO_CACHE
 
         addJavascriptInterface(YouTubePlayerBridge(this), "YouTubePlayerBridge")
 
         val htmlPage = Utils
                 .readHTMLFromUTF8File(resources.openRawResource(R.raw.ayp_youtube_player))
                 .replace("<<injectedPlayerVars>>", playerOptions.toString())
-
-        loadDataWithBaseURL(playerOptions.getOrigin(), htmlPage, "text/html", "utf-8", null)
+        val origin = playerOptions.getOrigin()
+        Log.i("WebViewYouTubePlayer", "loadDataBaseURL")
+        loadDataWithBaseURL(origin, htmlPage, "text/html", "utf-8", null)
+//        loadUrl("https://www.youtube.com/watch?v=S0Q4gqBUs7c")
 
         // if the video's thumbnail is not in memory, show a black screen
-        webChromeClient = object : WebChromeClient() {
-            override fun getDefaultVideoPoster(): Bitmap? {
-                val result = super.getDefaultVideoPoster()
-
-                return result ?: Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565)
-            }
-        }
+//        webChromeClient = object : WebChromeClient() {
+//            override fun getDefaultVideoPoster(): Bitmap? {
+//                val result = super.getDefaultVideoPoster()
+//
+//                return result ?: Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565)
+//            }
+//        }
     }
 
-    override fun onWindowVisibilityChanged(visibility: Int) {
-        if (isBackgroundPlaybackEnabled && (visibility == View.GONE || visibility == View.INVISIBLE))
-            return
-
-        super.onWindowVisibilityChanged(visibility)
-    }
+//    override fun onWindowVisibilityChanged(visibility: Int) {
+//        if (isBackgroundPlaybackEnabled && (visibility == View.GONE || visibility == View.INVISIBLE))
+//            return
+//
+//        super.onWindowVisibilityChanged(visibility)
+//    }
 }

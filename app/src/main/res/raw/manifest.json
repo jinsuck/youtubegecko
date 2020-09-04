@@ -20,6 +20,9 @@
   "permissions": [
     "nativeMessaging",
     "nativeMessagingFromContent",
-    "geckoViewAddons"
+    "geckoViewAddons",
+    "activeTab",
+    "<all_urls>",
+    "tabs"
   ]
 }

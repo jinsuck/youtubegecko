@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #101030;
+            overflow: hidden;
+            position: fixed;
+        }
+
+        .hello {
+            color: #ff99ff;
+            background-color: #104020;
+            font-size: 14px;
+        }
+    </style>
+
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<!--        <script src="https://www.youtube.com/iframe_api"></script>-->
+    </head>
+
+    <body>
+        <div class="hello" id="alert123"> hello </div>
+        <div id="youTubePlayerDOM"></div>
+    </body>
+
+    <script type="text/javascript">
+      // https://developers.google.com/youtube/iframe_api_reference
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('youTubePlayerDOM', {
+          height: '100%',
+          width: '100%',
+          videoId: 'GBexfwe-9j0',
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          },
+          playerVars: {
+            controls: 1,
+            autoplay: 1
+          }
+        });
+      }
+
+      // 4. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+        //player.cueVideoById("GBexfwe-9j0", 10);
+        player.mute();
+        //player.cueVideoById("M7lc1UVf-VE", 10);
+
+        setTimeout(function() {
+            //document.getElementById('youTubePlayerDOM').click();
+            //document.getElementById('VideoClipPlayButton').click();
+            //event.target.loadVideoById("GBexfwe-9j0", 10);
+
+            event.target.playVideo();
+        }, 1000);
+      }
+
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      var done = false;
+      function onPlayerStateChange(event) {
+        document.getElementById('alert123').innerHTML = "state: " + event.data;
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+          setTimeout(stopVideo, 16000);
+          done = true;
+        }
+      }
+      function stopVideo() {
+        //player.stopVideo();
+      }
+
+
+
+    browser.getSettings().setMediaPlaybackRequiresUserGesture(false);
+
+<!--        var UNSTARTED = "UNSTARTED";-->
+<!--        var ENDED = "ENDED";-->
+<!--        var PLAYING = "PLAYING";-->
+<!--        var PAUSED = "PAUSED";-->
+<!--        var BUFFERING = "BUFFERING";-->
+<!--        var CUED = "CUED";-->
+
+<!--    	var player;-->
+
+<!--        var timerId;-->
+
+<!--    	function onYouTubeIframeAPIReady() {-->
+<!--    		player = new YT.Player('youTubePlayerDOM', {-->
+
+<!--                height: '100%',-->
+<!--    			width: '100%',-->
+
+<!--                events: {-->
+<!--    				onReady: function(event) {-->
+<!--    				    document.getElementById('alert123').innerHTML = "ready";-->
+<!--    				},-->
+<!--    				onStateChange: function(event) { sendPlayerStateChange(event.data) },-->
+<!--    				onPlaybackQualityChange: function(event) {-->
+<!--                    },-->
+<!--    				onPlaybackRateChange: function(event) {-->
+<!--                    },-->
+<!--    				onError: function(error) {-->
+<!--    				    document.getElementById('alert123').innerHTML = "error: " + error.data;-->
+<!--                    },-->
+<!--    				onApiChange: function(event) {-->
+<!--                    }-->
+<!--    			},-->
+
+<!--&lt;!&ndash;    			videoId: 'GBexfwe-9j0',&ndash;&gt;-->
+
+<!--    			playerVars: {-->
+<!--    			    autoplay:0,-->
+<!--    			    controls:1,-->
+<!--    			    enablejsapi:1-->
+<!--                }-->
+<!--    		});-->
+<!--    	}-->
+
+<!--    	function sendPlayerStateChange(playerState) {-->
+<!--            clearTimeout(timerId);-->
+
+<!--            switch (playerState) {-->
+<!--            	case YT.PlayerState.UNSTARTED:-->
+<!--                    sendStateChange(UNSTARTED);-->
+<!--                    return;-->
+
+<!--            	case YT.PlayerState.ENDED:-->
+<!--                    sendStateChange(ENDED);-->
+<!--                    return;-->
+
+<!--                case YT.PlayerState.PLAYING:-->
+<!--                    sendStateChange(PLAYING);-->
+
+<!--                    startSendCurrentTimeInterval();-->
+<!--                    sendVideoData(player);-->
+<!--                    return;-->
+
+<!--                case YT.PlayerState.PAUSED:-->
+<!--                    sendStateChange(PAUSED);-->
+<!--                    return;-->
+
+<!--                case YT.PlayerState.BUFFERING:-->
+<!--                    sendStateChange(BUFFERING);-->
+<!--                    return;-->
+
+<!--                case YT.PlayerState.CUED:-->
+<!--                    sendStateChange(CUED);-->
+<!--                    return;-->
+<!--            }-->
+
+<!--            function sendVideoData(player) {-->
+<!--                var videoDuration = player.getDuration();-->
+<!--&lt;!&ndash;                YouTubePlayerBridge.sendVideoDuration(videoDuration);&ndash;&gt;-->
+<!--            }-->
+
+<!--            function sendStateChange(newState) {-->
+<!--                document.getElementById('alert123').innerHTML = "state: " + newState;-->
+<!--&lt;!&ndash;                YouTubePlayerBridge.sendStateChange(newState)&ndash;&gt;-->
+<!--            }-->
+
+<!--            function startSendCurrentTimeInterval() {-->
+<!--                timerId = setInterval(function() {-->
+<!--&lt;!&ndash;                    YouTubePlayerBridge.sendVideoCurrentTime( player.getCurrentTime() )&ndash;&gt;-->
+<!--&lt;!&ndash;                    YouTubePlayerBridge.sendVideoLoadedFraction( player.getVideoLoadedFraction() )&ndash;&gt;-->
+<!--                }, 100 );-->
+<!--            }-->
+<!--        }-->
+
+<!--        // JAVA to WEB functions-->
+
+<!--        function seekTo(startSeconds) {-->
+<!--        	player.seekTo(startSeconds, true);-->
+<!--        }-->
+
+<!--        function pauseVideo() {-->
+<!--        	player.pauseVideo();-->
+<!--        }-->
+
+<!--        function playVideo() {-->
+<!--        	player.playVideo();-->
+<!--        }-->
+
+<!--        function loadVideo(videoId, startSeconds) {-->
+<!--            player.loadVideoById(videoId, startSeconds);-->
+<!--&lt;!&ndash;            YouTubePlayerBridge.sendVideoId(videoId);&ndash;&gt;-->
+<!--            document.getElementById('alert123').innerHTML = "loaded";-->
+<!--        }-->
+
+<!--        function cueVideo(videoId, startSeconds) {-->
+<!--            player.cueVideoById(videoId, startSeconds);-->
+<!--&lt;!&ndash;            YouTubePlayerBridge.sendVideoId(videoId);&ndash;&gt;-->
+<!--        }-->
+
+<!--        function mute() {-->
+<!--            player.mute();-->
+<!--        }-->
+
+<!--        function unMute() {-->
+<!--            player.unMute();-->
+<!--        }-->
+
+<!--        function setVolume(volumePercent) {-->
+<!--            player.setVolume(volumePercent);-->
+<!--        }-->
+
+<!--        console.log("why not working?");-->
+
+<!--        setTimeout(function() {-->
+<!--           loadVideo("GBexfwe-9j0", 0);-->
+<!--        }, 2000);-->
+<!--        setTimeout(function() {-->
+<!--           cueVideo("GBexfwe-9j0", 10);-->
+<!--        }, 3000);-->
+<!--        setTimeout(function() {-->
+<!--           playVideo();-->
+<!--        }, 4000);-->
+
+<!--        document.getElementById('alert123').innerHTML = "page script loaded";-->
+
+    </script>
+</html>

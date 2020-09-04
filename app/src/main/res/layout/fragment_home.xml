@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
 
         app:autoPlay="false"
-        app:useWebUi="true"
+        app:useWebUi="false"
         app:videoId="S0Q4gqBUs7c" />
 
     <TextView

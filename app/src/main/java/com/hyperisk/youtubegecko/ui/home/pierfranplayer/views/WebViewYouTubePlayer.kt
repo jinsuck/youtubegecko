@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
@@ -21,6 +22,9 @@ import java.util.*
 /**
  * WebView implementation of [YouTubePlayer]. The player runs inside the WebView, using the IFrame Player API.
  */
+
+private const val TAG = "home/WebViewYouTubePlayer"
+
 internal class WebViewYouTubePlayer constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     : WebView(context, attrs, defStyleAttr), YouTubePlayer, YouTubePlayerBridge.YouTubePlayerBridgeCallbacks {
 
@@ -41,14 +45,17 @@ internal class WebViewYouTubePlayer constructor(context: Context, attrs: Attribu
     override fun getInstance(): YouTubePlayer = this
 
     override fun loadVideo(videoId: String, startSeconds: Float) {
+        Log.i(TAG, "loadVideo $startSeconds")
         mainThreadHandler.post { loadUrl("javascript:loadVideo('$videoId', $startSeconds)") }
     }
 
     override fun cueVideo(videoId: String, startSeconds: Float) {
+        Log.i(TAG, "cueVideo")
         mainThreadHandler.post { loadUrl("javascript:cueVideo('$videoId', $startSeconds)") }
     }
 
     override fun play() {
+        Log.i(TAG, "play")
         mainThreadHandler.post { loadUrl("javascript:playVideo()") }
     }
 
@@ -71,6 +78,7 @@ internal class WebViewYouTubePlayer constructor(context: Context, attrs: Attribu
     }
 
     override fun seekTo(time: Float) {
+        Log.i(TAG, "seekTo")
         mainThreadHandler.post { loadUrl("javascript:seekTo($time)") }
     }
 
@@ -100,8 +108,9 @@ internal class WebViewYouTubePlayer constructor(context: Context, attrs: Attribu
 
         addJavascriptInterface(YouTubePlayerBridge(this), "YouTubePlayerBridge")
 
+        Log.i(TAG, "injectedPlayerVars $playerOptions")
         val htmlPage = Utils
-                .readHTMLFromUTF8File(resources.openRawResource(R.raw.ayp_youtube_player))
+                .readHTMLFromUTF8File(resources.openRawResource(R.raw.ayp_youtube_player_home))
                 .replace("<<injectedPlayerVars>>", playerOptions.toString())
 
         loadDataWithBaseURL(playerOptions.getOrigin(), htmlPage, "text/html", "utf-8", null)

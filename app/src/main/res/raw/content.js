@@ -1,10 +1,29 @@
-function onMessage(event) {
-    //browser.runtime.sendNativeMessage('messaging@imvu.com', event.data);
-    browser.runtime.sendNativeMessage('messaging@imvu.com', "something something");
-    browser.runtime.sendNativeMessage("browser", "something something");
+function onMessageFromPage(event) {
+    if (event.data.from == "page") {
+        browser.runtime.sendMessage({"from": "content", "data": "message from content js: " + event.data.info});
+    }
 }
 
-window.top.addEventListener('message', onMessage, false);
+window.top.addEventListener('message', onMessageFromPage, false);
 
-browser.runtime.sendNativeMessage("browser", "something something NOW 1");
-browser.runtime.sendNativeMessage("messaging@imvu.com", "something something NOW 2");
+
+// does not work
+//function onMessageReceivedFromBackgroundScript(data) {
+//    if (data.from == "background") {
+//        window.top.postMessage({'from' : 'content', 'info': data.data}, '*');
+//    }
+//}
+//browser.runtime.onMessage.addListener(onMessageReceivedFromBackgroundScript)
+
+
+let myPort = browser.runtime.connect({name:"port-from-content"});
+myPort.postMessage({greeting: "hello from content script"});
+
+myPort.onMessage.addListener(function(m) {
+  // works, but should not be needed
+  //document.getElementById('alert123').innerHTML = m.greeting;
+  window.top.postMessage({from : 'content', info: m.greeting}, '*');
+
+  // does not work
+  //console.log("content.js: myPort.onMessage");
+});

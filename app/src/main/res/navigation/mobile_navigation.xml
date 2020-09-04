@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/navigation_gecko_1"
-        android:name="com.hyperisk.youtubegecko.ui.gecko_1.Gecko1Fragment"
+        android:name="com.hyperisk.youtubegecko.ui.gecko_1.Gecko1Fragment2"
         android:label="@string/title_gecko_1"
         tools:layout="@layout/fragment_gecko_1" />
 
     <fragment
         android:id="@+id/navigation_gecko_2"
-        android:name="com.hyperisk.youtubegecko.ui.gecko_2.Gecko2Fragment"
+        android:name="com.hyperisk.youtubegecko.ui.gecko_2.Gecko2Fragment2"
         android:label="@string/title_gecko_2"
         tools:layout="@layout/fragment_gecko_2" />
 </navigation>

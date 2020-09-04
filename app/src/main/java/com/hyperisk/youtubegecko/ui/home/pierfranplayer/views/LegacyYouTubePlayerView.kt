@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -24,6 +25,8 @@ import com.hyperisk.youtubegecko.ui.home.pierfranplayer.utils.PlaybackResumer
 import com.hyperisk.youtubegecko.ui.home.pierfranui.DefaultPlayerUiController
 import com.hyperisk.youtubegecko.ui.home.pierfranplayer.utils.NetworkListener
 import com.hyperisk.youtubegecko.ui.home.pierfranui.PlayerUiController
+
+private const val TAG = "LegacyYouTubePlayerView"
 
 internal class LegacyYouTubePlayerView(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0):
         SixteenByNineFrameLayout(context, attrs, defStyleAttr), LifecycleObserver {
@@ -49,6 +52,7 @@ internal class LegacyYouTubePlayerView(context: Context, attrs: AttributeSet? = 
         private set
 
     init {
+        Log.i(TAG, "init")
         addView(youTubePlayer, FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
         defaultPlayerUiController = DefaultPlayerUiController(this, youTubePlayer)
 
@@ -77,6 +81,7 @@ internal class LegacyYouTubePlayerView(context: Context, attrs: AttributeSet? = 
         })
 
         networkListener.onNetworkAvailable = {
+            Log.i(TAG, "onNetworkAvailable")
             if (!isYouTubePlayerReady)
                 initialize()
             else

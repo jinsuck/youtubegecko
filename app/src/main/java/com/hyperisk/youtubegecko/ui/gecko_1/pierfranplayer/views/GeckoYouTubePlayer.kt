@@ -37,20 +37,18 @@ internal class GeckoYouTubePlayer @JvmOverloads constructor(
     ) {
         youTubePlayerInitListener = initListener
 
-        mainThreadHandler.postDelayed({
-            val geckoRuntimeSettings = GeckoRuntimeSettings.Builder()
-            geckoRuntimeSettings.javaScriptEnabled(true);
+        val geckoRuntimeSettings = GeckoRuntimeSettings.Builder()
+        geckoRuntimeSettings.javaScriptEnabled(true);
 
-            // TODO
-//            addJavascriptInterface(YouTubePlayerBridge(this), "YouTubePlayerBridge")
-
-            val geckoSession = GeckoSession()
-            geckoRuntime = GeckoRuntime.create(context, geckoRuntimeSettings.build())
+        val geckoSession = GeckoSession()
+        geckoRuntime = GeckoRuntime.create(context, geckoRuntimeSettings.build())
 
 //            regExt()
 
-            geckoSession.open(geckoRuntime!!)
-            setSession(geckoSession)
+        geckoSession.open(geckoRuntime!!)
+        setSession(geckoSession)
+
+        mainThreadHandler.postDelayed({
 
             val htmlPage = Utils
                 .readHTMLFromUTF8File(resources.openRawResource(R.raw.ayp_youtube_player))
@@ -73,39 +71,39 @@ internal class GeckoYouTubePlayer @JvmOverloads constructor(
         geckoRuntime?.shutdown()
     }
 
-    private fun regExt() {
-        val messageDelegate: MessageDelegate = object : MessageDelegate {
-            override fun onConnect(port: WebExtension.Port) {
-                s_port = port
-                s_port!!.setDelegate(portDelegate)
-                Log.i(TAG, "WebExtension port is connected")
-            }
-        }
-
-
-        geckoRuntime!!.webExtensionController.list().then { extensionList ->
-            var result:GeckoResult<WebExtension>? = null
-            for (extension: WebExtension in extensionList!!) {
-                Log.i(TAG, "extension in list: ${extension.id} ${extension.metaData?.version}")
-                if (extension.id == "'messaging@imvu.com" && extension.metaData?.version?.equals(1f)!!) {
-                    Log.i(TAG, "Extension already installed, no need to install it again")
-                    result =  GeckoResult.fromValue(extension)
-                }
-            }
-            result ?: run {
-                Log.i(TAG, "call installBuiltIn now")
-                geckoRuntime!!.webExtensionController
-                    .installBuiltIn("resource://android/res/raw/")
-            }
-        }
-            .accept( // Register message delegate for background script
-            { extension ->
-                Log.i("MessageDelegate", "installBuiltIn accept, setMessageDelegate")
-                session!!.webExtensionController.setMessageDelegate(extension!!, messageDelegate, "browser")
-            }
-        ) { e -> Log.e("MessageDelegate", "Error registering WebExtension", e) }
-
-    }
+//    private fun regExt() {
+//        val messageDelegate: MessageDelegate = object : MessageDelegate {
+//            override fun onConnect(port: WebExtension.Port) {
+//                s_port = port
+//                s_port!!.setDelegate(portDelegate)
+//                Log.i(TAG, "WebExtension port is connected")
+//            }
+//        }
+//
+//
+//        geckoRuntime!!.webExtensionController.list().then { extensionList ->
+//            var result:GeckoResult<WebExtension>? = null
+//            for (extension: WebExtension in extensionList!!) {
+//                Log.i(TAG, "extension in list: ${extension.id} ${extension.metaData?.version}")
+//                if (extension.id == "'messaging@imvu.com" && extension.metaData?.version?.equals(1f)!!) {
+//                    Log.i(TAG, "Extension already installed, no need to install it again")
+//                    result =  GeckoResult.fromValue(extension)
+//                }
+//            }
+//            result ?: run {
+//                Log.i(TAG, "call installBuiltIn now")
+//                geckoRuntime!!.webExtensionController
+//                    .installBuiltIn("resource://android/res/raw_gecko1/")
+//            }
+//        }
+//            .accept( // Register message delegate for background script
+//            { extension ->
+//                Log.i("MessageDelegate", "installBuiltIn accept, setMessageDelegate")
+//                session!!.webExtensionController.setMessageDelegate(extension!!, messageDelegate, "browser")
+//            }
+//        ) { e -> Log.e("MessageDelegate", "Error registering WebExtension", e) }
+//
+//    }
 
     fun evaluateJavascript(code: String?) {
         try {
@@ -126,7 +124,7 @@ internal class GeckoYouTubePlayer @JvmOverloads constructor(
         Log.i(TAG, "loadVideo")
         mainThreadHandler.post {
 //            session?.loadUri("javascript:loadVideo('$videoId', $startSeconds)")
-            evaluateJavascript("showAlert111();")
+//            evaluateJavascript("showAlert111();")
         }
     }
 
@@ -184,56 +182,5 @@ internal class GeckoYouTubePlayer @JvmOverloads constructor(
         private var s_port: WebExtension.Port? = null
         private var s_runtime: GeckoRuntime? = null
         private var s_webView: GeckoYouTubePlayer? = null
-    }
-
-
-    val portDelegate: PortDelegate = object : PortDelegate {
-        private val TAG = "PortDelegate"
-
-        // public WebExtension.Port port = null;
-        inner class JSMessage(val name: String, val data: String) {
-
-            override fun toString(): String {
-                return String.format("{%s, %s}", name, data)
-            }
-        }
-
-        private fun toJSMesage(obj: Any): JSMessage? {
-            return try {
-                val jsonObj: JSONObject = when (obj) {
-                    is String -> {
-                        JSONObject(obj)
-                    }
-                    is JSONObject -> {
-                        obj
-                    }
-                    else -> {
-                        Log.e(TAG, "Not supported message type - " + obj.javaClass.toString())
-                        return null
-                    }
-                }
-                val name = jsonObj.getString("event")
-
-                // could be null
-                val data = jsonObj.optString("info")
-                JSMessage(name, data)
-            } catch (exc: JSONException) {
-                Log.e(TAG, "Failed to parse json str - " + exc.message)
-                null
-            }
-        }
-
-        override fun onPortMessage(obj: Any, port: WebExtension.Port) {
-            val message = toJSMesage(obj)
-            if (message != null) {
-                s_webView?.onMessageReceived(message.name, message.data)
-            }
-        }
-
-        override fun onDisconnect(port: WebExtension.Port) {
-            if (port === s_port) {
-                s_port = null
-            }
-        }
     }
 }

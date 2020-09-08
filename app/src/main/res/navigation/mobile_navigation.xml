@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_gecko_2"
-        android:name="com.hyperisk.youtubegecko.ui.gecko_2.Gecko2Fragment2"
+        android:name="com.hyperisk.youtubegecko.ui.gecko_2.Gecko2Fragment"
         android:label="@string/title_gecko_2"
         tools:layout="@layout/fragment_gecko_2" />
 </navigation>

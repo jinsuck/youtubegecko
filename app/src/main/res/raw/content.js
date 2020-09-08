@@ -1,6 +1,6 @@
 function onMessageFromPage(event) {
     if (event.data.from == "page") {
-        browser.runtime.sendMessage({"from": "content", "data": "message from content js: " + event.data.info});
+        browser.runtime.sendMessage({"from": "content", "data": "onMessageFromPage: " + event.data.info});
     }
 }
 

@@ -70,13 +70,13 @@
 
     setTimeout(function() {
         console.log("page.js: execute timeout");
+        window.top.postMessage({'from' : 'page', 'info': "test msg from page javascript"}, '*');
+
         //window.top.postMessage({'event' : 'test___ 1000', 'info': "event.data ____ 1000"}, '*');
         //browser.runtime.sendMessage("runtime message___");
         //showAlert456();
-        window.top.postMessage({'from' : 'page', 'info': "test msg from page"}, '*');
-        player.playVideo();
-
-    }, 2000);
+        //player.playVideo();
+    }, 1000);
 
     function onMessageFromContent(event) {
         if (event.data.from == "content") {

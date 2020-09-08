@@ -101,7 +101,6 @@ public class Gecko2Fragment2 extends Fragment {
         session.open(sRuntime);
         geckoView.setSession(session);
 
-
 //        session.loadUri("https://mobile.twitter.com");
 //        session.loadUri("https://www.youtube.com/watch?v=S0Q4gqBUs7c");
 

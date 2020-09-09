@@ -1,5 +1,6 @@
 package com.hyperisk.youtubegecko.ui.gecko_2
 
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.hyperisk.youtubegecko.R
 import com.hyperisk.youtubegecko.ui.AutoplayPermissionDelegate
+import kotlinx.android.synthetic.main.fragment_gecko_2.view.*
 import org.json.JSONException
 import org.json.JSONObject
 import org.mozilla.geckoview.*
@@ -63,6 +65,10 @@ class Gecko2Fragment : Fragment() {
             sendPortMessage("playVideo")
             // TODO, wait for player ready event
         }, 2000)
+
+        mainThreadHandler.postDelayed({
+            copyPixels()
+        }, 3000)
     }
 
     val portDelegate: WebExtension.PortDelegate = object : WebExtension.PortDelegate {
@@ -159,6 +165,26 @@ class Gecko2Fragment : Fragment() {
         }
         Log.i(TAG, "postMessage from Java to port $message")
         portNotNull.postMessage(jsonObj)
+    }
+
+    private fun copyPixels() {
+        if (!isAdded || isDetached) return
+        val viewNotNull = view ?: return
+        val geckoView = viewNotNull.findViewById<GeckoView>(R.id.geckoview)
+        Log.i(TAG, "capturePixels start")
+        val result:GeckoResult<Bitmap> = geckoView.capturePixels()
+        result.accept {bitmap ->
+            bitmap?.let{ bitmapNotNull ->
+                Log.i(TAG, "capturePixels result: ${bitmapNotNull.width} x ${bitmapNotNull.height}")
+                viewNotNull.image_copy_pixel.setImageBitmap(bitmapNotNull)
+
+                mainThreadHandler.postDelayed({
+                    copyPixels()
+                }, 10)
+            } ?: run {
+                Log.w(TAG, "capturePixels result bitmap is null")
+            }
+        }
     }
 
     companion object {

@@ -22,7 +22,7 @@ import java.io.*
 class Gecko1Fragment : Fragment() {
     private val TAG = "Gecko1Fragment"
     private lateinit var viewModel: Gecko1ViewModel
-    private lateinit var session: GeckoSession
+    private lateinit var s_session: GeckoSession
     private val mainThreadHandler: Handler = Handler(Looper.getMainLooper())
 
     override fun onCreateView(
@@ -46,17 +46,19 @@ class Gecko1Fragment : Fragment() {
         Log.i(TAG, "initView")
         val viewNotNull = view ?: return
         val geckoView: GeckoView = viewNotNull.findViewById(R.id.geckoview)
-        session = GeckoSession()
-        session.permissionDelegate = AutoplayPermissionDelegate()
+        s_session = GeckoSession()
+        s_session.permissionDelegate = AutoplayPermissionDelegate()
 
         val settings = GeckoRuntimeSettings.Builder()
             .javaScriptEnabled(true)
             .consoleOutput(true)
             .debugLogging(true)
             .build()
-        var sRuntime = GeckoRuntime.create(requireContext(), settings)
-        session.open(sRuntime)
-        geckoView.setSession(session)
+        if (s_runtime == null) {
+            s_runtime = GeckoRuntime.create(requireContext(), settings)
+        }
+        s_session.open(s_runtime!!)
+        geckoView.setSession(s_session)
 
 //        session.loadUri("https://mobile.twitter.com");
 //        session.loadUri("https://www.youtube.com/watch?v=S0Q4gqBUs7c");
@@ -76,7 +78,7 @@ class Gecko1Fragment : Fragment() {
             writer.write(htmlData)
             writer.flush()
             val fileUri = Uri.fromFile(outputFile).toString()
-            session.loadUri(fileUri)
+            s_session.loadUri(fileUri)
             outputFile.deleteOnExit()
         } catch (e: IOException) {
             e.printStackTrace()
@@ -115,5 +117,9 @@ class Gecko1Fragment : Fragment() {
         } finally {
             inputStream.close()
         }
+    }
+
+    companion object {
+        private var s_runtime: GeckoRuntime? = null
     }
 }

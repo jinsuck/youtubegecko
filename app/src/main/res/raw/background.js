@@ -1,10 +1,12 @@
+const nativePort = browser.runtime.connectNative("browser");
+
 let portFromCS;
 
 function connectedPortContent(p) {
+  nativePort.postMessage("connectedPortContent");
   portFromCS = p;
-  //portFromCS.postMessage({greeting: "hi there content script!"});
   portFromCS.onMessage.addListener(function(m) {
-    //portFromCS.postMessage({greeting: "In background script, received message from content script:" + m.greeting});
+      nativePort.postMessage("onMessage " + Object.keys(m));
   });
 }
 
@@ -17,28 +19,25 @@ browser.runtime.onConnect.addListener(connectedPortContent);
 
 
 
-const nativePort = browser.runtime.connectNative("browser");
 
-nativePort.onMessage.addListener(json => {
-    nativePort.postMessage('echo background port received ' + json["code"]);
-
+nativePort.onMessage.addListener(jsonObj => {
+    nativePort.postMessage('echo background port received ' + jsonObj["code"]);
     // does not work :(
     // JavaScript Error: "Error: Could not establish connection. Receiving end does not exist.
     // browser.runtime.sendMessage({"from": "background", "data": json["code"]});
 
-
-//    nativePort.postMessage('window top: ' + Object.keys(window.top));
-//    nativePort.postMessage('chrome : ' + Object.keys(chrome.tabs));
-//    nativePort.postMessage('browser : ' + Object.keys(browser.tabs.TabStatus));
-//    nativePort.postMessage('browser runtime : ' + Object.keys(browser.runtime));
-//    nativePort.postMessage('this keys: ' + Object.keys(this));
+    //    nativePort.postMessage('window top: ' + Object.keys(window.top));
+    //    nativePort.postMessage('chrome : ' + Object.keys(chrome.tabs));
+    //    nativePort.postMessage('browser : ' + Object.keys(browser.tabs.TabStatus));
+    //    nativePort.postMessage('browser runtime : ' + Object.keys(browser.runtime));
+    //    nativePort.postMessage('this keys: ' + Object.keys(this));
 
     // does not work :(
     // uncaught exception: Native app not found or this WebExtension does not have permissions.
     // chrome.tabs.executeScript({code:json['code']});
 
     // this works
-    portFromCS.postMessage({greeting: json["code"]});
+    portFromCS.postMessage({from: "background", data: jsonObj["code"]});
 });
 
 function onMessageReceivedFromContentScript(data) {

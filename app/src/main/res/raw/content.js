@@ -6,7 +6,6 @@ function onMessageFromPage(event) {
 
 window.top.addEventListener('message', onMessageFromPage, false);
 
-
 // does not work
 //function onMessageReceivedFromBackgroundScript(data) {
 //    if (data.from == "background") {
@@ -17,12 +16,13 @@ window.top.addEventListener('message', onMessageFromPage, false);
 
 
 let myPort = browser.runtime.connect({name:"port-from-content"});
-myPort.postMessage({greeting: "hello from content script"});
+myPort.postMessage({greeting_from_content_js: "hello from content script"});
 
 myPort.onMessage.addListener(function(m) {
   // works, but should not be needed
   //document.getElementById('alert123').innerHTML = m.greeting;
-  window.top.postMessage({from : 'content', info: m.greeting}, '*');
+  //myPort.postMessage({echo_port_msg_from_content_js: m["data"]});
+  window.top.postMessage({from: "content", info: m["data"]}, '*');
 
   // does not work
   //console.log("content.js: myPort.onMessage");

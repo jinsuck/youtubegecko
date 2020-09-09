@@ -42,7 +42,9 @@ class Gecko2Fragment : Fragment() {
                     .consoleOutput(true)
                     .build()
             }
-        s_runtime = GeckoRuntime.create(requireContext(), settings)
+        if (s_runtime == null) {
+            s_runtime = GeckoRuntime.create(requireContext(), settings)
+        }
         return view
     }
 
@@ -58,7 +60,8 @@ class Gecko2Fragment : Fragment() {
         loadHhtml(geckoSession)
 
         mainThreadHandler.postDelayed({
-            testSendPortMessage()
+            sendPortMessage("playVideo")
+            // TODO, wait for player ready event
         }, 2000)
     }
 
@@ -66,7 +69,7 @@ class Gecko2Fragment : Fragment() {
         private val TAG = "PortDelegate"
 
         override fun onPortMessage(message: Any, port: WebExtension.Port) {
-            Log.d(TAG, "port message >>> $message")
+            Log.d(TAG, "onPortMessage >>> $message")
             //val message = toJSMesage(obj)
             //if (message != null) {
             //    s_webView?.onMessageReceived(message.name, message.data)
@@ -102,15 +105,15 @@ class Gecko2Fragment : Fragment() {
             var result: GeckoResult<WebExtension>? = null
             for (extension: WebExtension in extensionList!!) {
                 Log.i(TAG, "extension in list: ${extension.id} ${extension.metaData?.version}")
-                if (BuildConfig.DEBUG) {
-                    Log.i(TAG, "UNINSTALL the extension!!!")
-                    s_runtime?.webExtensionController?.uninstall(extension)
-                } else {
-                    if (extension.id == "'messaging@imvu.com" && extension.metaData?.version?.equals(
-                            "1"
-                        ) == true) {
-                        Log.i(TAG, "Extension already installed, no need to install it again")
-                        result =  GeckoResult.fromValue(extension)
+                if (extension.id == "'messaging@imvu.com"
+                        && extension.metaData?.version?.equals("1.0") == true) {
+                    Log.i(TAG, "Extension already installed...")
+                    if (BuildConfig.DEBUG) {
+                        s_runtime?.webExtensionController?.uninstall(extension) ?: run {
+                            Log.e(TAG, "uninstall skipped (webExtensionController null?)")
+                        }
+                    } else {
+                        result = GeckoResult.fromValue(extension)
                     }
                 }
             }
@@ -142,20 +145,20 @@ class Gecko2Fragment : Fragment() {
         outputFile.deleteOnExit()
     }
 
-    private fun testSendPortMessage() {
+    private fun sendPortMessage(message: String) {
         val portNotNull = s_port ?: run {
             Log.e(TAG, "testSendPortMessage, s_port is null")
             return
         }
-        val message = JSONObject()
+        val jsonObj = JSONObject()
         try {
-            message.put("code", "test message from fragment")
-            message.put("event", 1234)
+            jsonObj.put("code", message)
+            jsonObj.put("event", 1234)
         } catch (ex: JSONException) {
             throw RuntimeException(ex)
         }
         Log.i(TAG, "postMessage from Java to port $message")
-        portNotNull.postMessage(message)
+        portNotNull.postMessage(jsonObj)
     }
 
     companion object {

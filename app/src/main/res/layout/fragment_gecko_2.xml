@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.gecko_2.Gecko2Fragment">
 
-    <org.mozilla.geckoview.GeckoView
+    <com.hyperisk.youtubegecko.ui.gecko_2.ExtendedGeckoView
         android:id="@+id/geckoview"
         android:layout_width="match_parent"
         android:layout_height="300dp"

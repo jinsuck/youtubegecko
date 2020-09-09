@@ -7,17 +7,24 @@
             margin: 0;
             outline: 0;
             width: 100%;
-            height: 100%;
+            height: 90%;
         }
 
         h2 {
             color: #889988;
             font-size: 50px;
+            height: 10%;
+        }
+        h3 {
+            color: #aabbaa;
+            font-size: 40px;
+            height: 10%;
         }
     </style>
 </head>
 <body>
-<!--    <h2 id="alert123"> ALERT!!! </h2>-->
+    <h2 id="log_message">hello</h2>
+    <h3 id="log_event">...</h3>
     <div id="player">
     </div>
 
@@ -25,10 +32,13 @@
 </html>
 
 <script>
+    console.log("why console log not working?");
+
     var tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    var isReady = false;
 
     var player;
 
@@ -44,8 +54,8 @@
     }
 
     function onPlayerReady(event) {
-        console.log("onPlayerReady");
         window.top.postMessage({'event':'playerReady'}, '*');
+        isReady = true;
     }
 
     function onPlayerStateChange(event) {
@@ -64,13 +74,9 @@
         window.top.postMessage({'event' : 'playbackRateChange', 'info': event.data}, '*');
     }
 
-    function showAlert456() {
-        document.getElementById('alert123').innerHTML = "YYYYYYYYYYES 111";
-    }
-
     setTimeout(function() {
         console.log("page.js: execute timeout");
-        window.top.postMessage({'from' : 'page', 'info': "test msg from page javascript"}, '*');
+        //window.top.postMessage({'from' : 'page', 'info': "test msg from page javascript"}, '*');
 
         //window.top.postMessage({'event' : 'test___ 1000', 'info': "event.data ____ 1000"}, '*');
         //browser.runtime.sendMessage("runtime message___");
@@ -79,9 +85,23 @@
     }, 1000);
 
     function onMessageFromContent(event) {
-        if (event.data.from == "content") {
-            document.getElementById('alert123').innerHTML = event.data.info;
-            console.log(">>> onMessageFromContent " + event.data.info);
+        if (event.data.from == "page") {
+            // ignore (sent from here)
+        } else if (event.data.event != undefined) {
+            document.getElementById('log_event').innerHTML = event.data.event;
+        } else if (event.data.from == "content") {
+            document.getElementById('log_message').innerHTML = "onMessage: " + event.data.info;
+            console.log("DOES NOT WORK: onMessage...");
+
+            if (event.data.info == "playVideo") {
+              if (isReady) {
+                player.playVideo();
+              } else {
+                document.getElementById('log_message').innerHTML = "playVideo: NOT READAY";
+              }
+            }
+        } else {
+            //document.getElementById('log_message').innerHTML = "onMessage unhandled, keys: " + Object.keys(event.data);
         }
     }
 

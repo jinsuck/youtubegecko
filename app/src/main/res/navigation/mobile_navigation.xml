@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.hyperisk.youtubegecko.ui.home.HomeFragment"
-        android:label="@string/title_home"
+        android:name="com.hyperisk.youtubegecko.ui.gecko_1.WebView1Fragment"
+        android:label="Home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_gecko_1"
-        android:name="com.hyperisk.youtubegecko.ui.gecko_1.WebView1Fragment"
-        android:label="@string/title_gecko_1"
+        android:name="com.hyperisk.youtubegecko.ui.home.HomeFragment"
+        android:label="WebView test"
         tools:layout="@layout/fragment_gecko_1" />
 
     <fragment
         android:id="@+id/navigation_gecko_2"
         android:name="com.hyperisk.youtubegecko.ui.gecko_2.Gecko2Fragment"
-        android:label="@string/title_gecko_2"
+        android:label="Gecko test"
         tools:layout="@layout/fragment_gecko_2" />
 </navigation>

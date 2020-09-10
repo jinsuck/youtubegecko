@@ -13,17 +13,12 @@ class ExtendedWebView(context: Context, attr: AttributeSet) : WebView(context, a
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         //Log.d(TAG, "onDraw")
-        canvas?.let { canvasNotNull ->
-            val curTime = System.currentTimeMillis()
-            if (lastCaptureTime == 0L || (curTime - lastCaptureTime > captureIntervalMsec)) {
-                captureFromCanvas(canvasNotNull)
-                lastCaptureTime = curTime
-            }
-        }
-    }
-
-    private fun captureFromCanvas(canvas: Canvas) {
-        Log.d(TAG, "captureFromCanvas")
+//        canvas?.let { canvasNotNull ->
+//            val curTime = System.currentTimeMillis()
+//            if (lastCaptureTime == 0L || (curTime - lastCaptureTime > captureIntervalMsec)) {
+//                lastCaptureTime = curTime
+//            }
+//        }
     }
 }
 

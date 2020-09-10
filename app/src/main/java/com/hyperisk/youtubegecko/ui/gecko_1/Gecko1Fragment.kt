@@ -65,7 +65,7 @@ class Gecko1Fragment : Fragment() {
     }
 
     private fun loadHtml() {
-        Log.i(TAG, "initHtml")
+        Log.i(TAG, "loadHtml")
         val htmlData = readHTMLFromUTF8File(
             resources.openRawResource(R.raw.ayp_youtube_player_gecko1)
         )

@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_gecko_1"
-        android:name="com.hyperisk.youtubegecko.ui.gecko_1.Gecko1Fragment"
+        android:name="com.hyperisk.youtubegecko.ui.gecko_1.WebView1Fragment"
         android:label="@string/title_gecko_1"
         tools:layout="@layout/fragment_gecko_1" />
 

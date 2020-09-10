@@ -47,6 +47,13 @@ class Gecko2Fragment : Fragment() {
         if (s_runtime == null) {
             s_runtime = GeckoRuntime.create(requireContext(), settings)
         }
+
+        view.show_hide_button.setOnClickListener {
+            val geckoView = view.findViewById<GeckoView>(R.id.geckoview)
+            geckoView.visibility = if (geckoView.visibility == View.VISIBLE)
+                View.INVISIBLE else View.VISIBLE
+        }
+
         return view
     }
 

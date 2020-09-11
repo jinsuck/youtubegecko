@@ -10,22 +10,15 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.*
-import android.webkit.WebChromeClient
-import android.webkit.WebChromeClient.CustomViewCallback
+import android.webkit.JavascriptInterface
 import android.webkit.WebSettings
 import android.webkit.WebView
-import android.webkit.WebViewClient
-import android.widget.Button
-import android.widget.FrameLayout
-import android.widget.VideoView
-import androidx.core.view.children
-import androidx.core.view.drawToBitmap
+import androidx.annotation.RestrictTo
 import androidx.fragment.app.Fragment
 import com.hyperisk.youtubegecko.R
 import kotlinx.android.synthetic.main.fragment_gecko_1_3.view.*
 import kotlinx.android.synthetic.main.fragment_gecko_2.view.image_copy_pixel
 import kotlinx.android.synthetic.main.fragment_gecko_2.view.show_hide_button
-import org.mozilla.thirdparty.com.google.android.exoplayer2.video.VideoDecoderGLSurfaceView
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -121,10 +114,9 @@ class WebView1Fragment : Fragment() {
             //Log.d(TAG, "screenshot done ${bitmapCopyNotNull.width}, ${bitmapCopyNotNull.height}")
         //}
 
-
         mainThreadHandler.postDelayed({
             screenshot1(webView)
-        }, 100)
+        }, 1000)
     }
 
     private var screenShotStartTime = 0L
@@ -259,13 +251,15 @@ class WebView1Fragment : Fragment() {
             newDialog.setTitle("This is my custom newDialog box")
             newDialog.setCancelable(true)
             newDialog.show()
-            newDialog.initScreenshot(this)
+            newDialog.onViewCreated(this, "GBexfwe-9j0")
             testDialog = newDialog
         }
     }
 
+
     private class TestDialog(context: Context) : Dialog(context) {
         private var fragmentRef: WeakReference<WebView1Fragment>? = null
+        private var videoId: String? = null
 
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
@@ -273,19 +267,36 @@ class WebView1Fragment : Fragment() {
 
             // TYPE_APPLICATION_MEDIA: for showing media (such as video). These windows are displayed behind their attached window.
             // https://developer.android.com/reference/android/view/WindowManager.LayoutParams
-            window!!.attributes.type = WindowManager.LayoutParams.TYPE_APPLICATION_MEDIA
+            //window!!.attributes.type = WindowManager.LayoutParams.TYPE_APPLICATION_MEDIA
 
-            loadHtml(findViewById(R.id.webview_in_dialog), context.resources.openRawResource(R.raw.ayp_youtube_player_gecko1))
+            val webView: WebView = findViewById(R.id.webview_in_dialog) ?: return
+            webView.addJavascriptInterface(YouTubePlayerInterface(this), "YouTubePlayerInterface")
+            loadHtml(webView, context.resources.openRawResource(R.raw.ayp_youtube_player_gecko1))
         }
 
-        fun initScreenshot(fragment: WebView1Fragment) {
-            Log.i(TAG, "initScreenshot")
+        fun onViewCreated(fragment: WebView1Fragment, videoId: String) {
+            this.videoId = videoId
             fragment.mainThreadHandler.postDelayed({
                 val webView: WebView = findViewById(R.id.webview_in_dialog) ?: return@postDelayed
                 Log.d(TAG, "TestDialog postDelayed screenshot2")
                 fragment.screenshot2(webView, window!!, 0)
-            }, 4000)
+            }, 1000)
             fragmentRef = WeakReference(fragment)
+        }
+
+        fun onYoutubePlayerReady() {
+            videoId?.let {
+                fragmentRef?.get()?.mainThreadHandler?.postDelayed({
+                    playVideo(it)
+                }, 30)
+            } ?: run {
+                Log.e(TAG, "videoId is not set on PlayerReady")
+            }
+        }
+
+        fun playVideo(videoId: String) {
+            val webView: WebView = findViewById(R.id.webview_in_dialog) ?: return
+            webView.loadUrl("javascript:player.loadVideoById('$videoId', 0);")
         }
 
         override fun onStop() {
@@ -295,12 +306,12 @@ class WebView1Fragment : Fragment() {
         }
     }
 
-    internal class myWebViewClient : WebViewClient() {
-        override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-            return super.shouldOverrideUrlLoading(
-                view,
-                url
-            ) //To change body of overridden methods use File | Settings | File Templates.
+    @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+    private class YouTubePlayerInterface(val testDialog: TestDialog) {
+        @JavascriptInterface
+        fun sendReady() {
+            Log.i(TAG, "YouTubePlayerInterface, sendReady")
+            testDialog.onYoutubePlayerReady();
         }
     }
 
@@ -309,9 +320,6 @@ class WebView1Fragment : Fragment() {
             webView.settings.javaScriptEnabled=true
             webView.settings.mediaPlaybackRequiresUserGesture = false
             webView.settings.cacheMode = WebSettings.LOAD_NO_CACHE
-            //        webView.loadUrl("https://mobile.twitter.com")
-            //        webView.loadUrl("https://www.youtube.com/watch?v=S0Q4gqBUs7c");
-
             val htmlPage = readHTMLFromUTF8File(htmlRes)
             webView.loadDataWithBaseURL("https://www.youtube.com", htmlPage, "text/html", "utf-8", null)
         }

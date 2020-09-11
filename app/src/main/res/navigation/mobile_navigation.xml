@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_gecko_1"
-        android:name="com.hyperisk.youtubegecko.ui.home.HomeFragment"
+        android:name="com.hyperisk.youtubegecko.ui.pierfran.PierfranFragment"
         android:label="WebView test"
         tools:layout="@layout/fragment_gecko_1" />
 

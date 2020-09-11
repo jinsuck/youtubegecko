@@ -251,7 +251,7 @@ class WebView1Fragment : Fragment() {
             newDialog.setTitle("This is my custom newDialog box")
             newDialog.setCancelable(true)
             newDialog.show()
-            newDialog.onViewCreated(this, "GBexfwe-9j0")
+            newDialog.onViewCreated(this, "VCrkjGIfZzY")
             testDialog = newDialog
         }
     }
@@ -267,7 +267,7 @@ class WebView1Fragment : Fragment() {
 
             // TYPE_APPLICATION_MEDIA: for showing media (such as video). These windows are displayed behind their attached window.
             // https://developer.android.com/reference/android/view/WindowManager.LayoutParams
-            //window!!.attributes.type = WindowManager.LayoutParams.TYPE_APPLICATION_MEDIA
+            window!!.attributes.type = WindowManager.LayoutParams.TYPE_APPLICATION_MEDIA
 
             val webView: WebView = findViewById(R.id.webview_in_dialog) ?: return
             webView.addJavascriptInterface(YouTubePlayerInterface(this), "YouTubePlayerInterface")

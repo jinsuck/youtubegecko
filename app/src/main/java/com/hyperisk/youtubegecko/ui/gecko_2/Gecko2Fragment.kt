@@ -69,12 +69,13 @@ class Gecko2Fragment : Fragment() {
         loadHhtml(geckoSession)
 
         mainThreadHandler.postDelayed({
-            sendPortMessage("playVideo")
             // TODO, wait for player ready event
-        }, 2000)
+            sendPortMessage("playVideo")
 
-        mainThreadHandler.postDelayed({
-            copyPixels()
+            mainThreadHandler.postDelayed({
+                copyPixels()
+            }, 300)
+
         }, 3000)
     }
 

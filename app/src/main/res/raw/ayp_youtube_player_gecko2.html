@@ -45,6 +45,7 @@
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
                                enablejsapi: '1',
+                               videoId: 'VCrkjGIfZzY',
                                playerVars: {autoplay: 1, controls : 0, loop : 0},
                                events: {'onReady': onPlayerReady, 'onStateChange': onPlayerStateChange,
                                         'onError': onPlayerError, 'onPlaybackQualityChange': onPlayerPlaybackQualityChange,
@@ -79,7 +80,6 @@
         //window.top.postMessage({'event' : 'test___ 1000', 'info': "event.data ____ 1000"}, '*');
         //browser.runtime.sendMessage("runtime message___");
         //player.playVideo();
-        //player.loadVideo('GBexfwe-9j0');
     }, 100);
 
     function onMessageFromContent(event) {
@@ -94,6 +94,7 @@
             if (event.data.info == "playVideo") {
               if (isReady) {
                 player.playVideo();
+                document.getElementById('log_message').innerHTML = "playVideo now";
               } else {
                 document.getElementById('log_message').innerHTML = "playVideo: NOT READAY";
               }
@@ -104,6 +105,5 @@
     }
 
     window.top.addEventListener('message', onMessageFromContent, false);
-Auto playing Youtube using GeckoView
 
 </script>

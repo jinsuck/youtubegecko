@@ -36,6 +36,7 @@ class WebView1Fragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.i(TAG, "onCreateView")
         val view = inflater.inflate(R.layout.fragment_gecko_1_3, container, false)
         view.show_hide_button.setOnClickListener {
             val webView: WebView = view.findViewById(R.id.youtube_webview)
@@ -65,7 +66,7 @@ class WebView1Fragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        Log.d(TAG, "onDestroyView")
+        Log.i(TAG, "onDestroyView")
         super.onDestroyView()
         //clearShot3()
         testDialog?.dismiss()

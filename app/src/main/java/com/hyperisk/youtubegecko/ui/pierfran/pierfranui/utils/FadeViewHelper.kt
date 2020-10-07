@@ -3,7 +3,7 @@ package com.hyperisk.youtubegecko.ui.pierfran.pierfranui.utils
 import android.animation.Animator
 import android.view.View
 import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.PlayerConstants
-import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.YouTubePlayer
+import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.YouTubePlayerInterface
 import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.listeners.YouTubePlayerListener
 
 class FadeViewHelper(val targetView: View): YouTubePlayerListener {
@@ -75,7 +75,7 @@ class FadeViewHelper(val targetView: View): YouTubePlayerListener {
         }
     }
 
-    override fun onStateChange(youTubePlayer: YouTubePlayer, state: PlayerConstants.PlayerState) {
+    override fun onStateChange(youTubePlayer: YouTubePlayerInterface, state: PlayerConstants.PlayerState) {
         updateState(state)
 
         when(state) {
@@ -95,13 +95,13 @@ class FadeViewHelper(val targetView: View): YouTubePlayerListener {
         }
     }
 
-    override fun onReady(youTubePlayer: YouTubePlayer) { }
-    override fun onPlaybackQualityChange(youTubePlayer: YouTubePlayer, playbackQuality: PlayerConstants.PlaybackQuality) { }
-    override fun onPlaybackRateChange(youTubePlayer: YouTubePlayer, playbackRate: PlayerConstants.PlaybackRate) { }
-    override fun onError(youTubePlayer: YouTubePlayer, error: PlayerConstants.PlayerError) { }
-    override fun onApiChange(youTubePlayer: YouTubePlayer) { }
-    override fun onCurrentSecond(youTubePlayer: YouTubePlayer, second: Float) { }
-    override fun onVideoDuration(youTubePlayer: YouTubePlayer, duration: Float) { }
-    override fun onVideoLoadedFraction(youTubePlayer: YouTubePlayer, loadedFraction: Float) { }
-    override fun onVideoId(youTubePlayer: YouTubePlayer, videoId: String) { }
+    override fun onReady(youTubePlayer: YouTubePlayerInterface) { }
+    override fun onPlaybackQualityChange(youTubePlayer: YouTubePlayerInterface, playbackQuality: PlayerConstants.PlaybackQuality) { }
+    override fun onPlaybackRateChange(youTubePlayer: YouTubePlayerInterface, playbackRate: PlayerConstants.PlaybackRate) { }
+    override fun onError(youTubePlayer: YouTubePlayerInterface, error: PlayerConstants.PlayerError) { }
+    override fun onApiChange(youTubePlayer: YouTubePlayerInterface) { }
+    override fun onCurrentSecond(youTubePlayer: YouTubePlayerInterface, second: Float) { }
+    override fun onVideoDuration(youTubePlayer: YouTubePlayerInterface, duration: Float) { }
+    override fun onVideoLoadedFraction(youTubePlayer: YouTubePlayerInterface, loadedFraction: Float) { }
+    override fun onVideoId(youTubePlayer: YouTubePlayerInterface, videoId: String) { }
 }

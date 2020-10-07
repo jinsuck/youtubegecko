@@ -1,6 +1,8 @@
 package com.hyperisk.youtubegecko
 
+import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -30,5 +32,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_gecko_1, R.id.navigation_gecko_2))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        Log.i(TAG, "mainAct: ${this as Activity}")
     }
 }
+
+private const val TAG = "MainActivity"

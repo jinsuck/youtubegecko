@@ -1,7 +1,7 @@
 package com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.utils
 
 import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.PlayerConstants
-import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.YouTubePlayer
+import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.YouTubePlayerInterface
 import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.listeners.AbstractYouTubePlayerListener
 
 
@@ -22,19 +22,19 @@ class YouTubePlayerTracker : AbstractYouTubePlayerListener() {
     var videoId: String? = null
         private set
 
-    override fun onStateChange(youTubePlayer: YouTubePlayer, state: PlayerConstants.PlayerState) {
+    override fun onStateChange(youTubePlayer: YouTubePlayerInterface, state: PlayerConstants.PlayerState) {
         this.state = state
     }
 
-    override fun onCurrentSecond(youTubePlayer: YouTubePlayer, second: Float) {
+    override fun onCurrentSecond(youTubePlayer: YouTubePlayerInterface, second: Float) {
         currentSecond = second
     }
 
-    override fun onVideoDuration(youTubePlayer: YouTubePlayer, duration: Float) {
+    override fun onVideoDuration(youTubePlayer: YouTubePlayerInterface, duration: Float) {
         videoDuration = duration
     }
 
-    override fun onVideoId(youTubePlayer: YouTubePlayer, videoId: String) {
+    override fun onVideoId(youTubePlayer: YouTubePlayerInterface, videoId: String) {
         this.videoId = videoId
     }
 }

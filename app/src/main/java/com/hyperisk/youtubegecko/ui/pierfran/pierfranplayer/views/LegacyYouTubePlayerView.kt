@@ -14,7 +14,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.hyperisk.youtubegecko.R
 import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.PlayerConstants
-import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.YouTubePlayer
+import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.YouTubePlayerInterface
 import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.listeners.AbstractYouTubePlayerListener
 import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.listeners.YouTubePlayerFullScreenListener
 import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.listeners.YouTubePlayerCallback
@@ -63,14 +63,14 @@ internal class LegacyYouTubePlayerView(context: Context, attrs: AttributeSet? = 
 
         // stop playing if the user loads a video but then leaves the app before the video starts playing.
         youTubePlayer.addListener(object : AbstractYouTubePlayerListener() {
-            override fun onStateChange(youTubePlayer: YouTubePlayer, state: PlayerConstants.PlayerState) {
+            override fun onStateChange(youTubePlayer: YouTubePlayerInterface, state: PlayerConstants.PlayerState) {
                 if(state == PlayerConstants.PlayerState.PLAYING && !isEligibleForPlayback())
                     youTubePlayer.pause()
             }
         })
 
         youTubePlayer.addListener(object : AbstractYouTubePlayerListener() {
-            override fun onReady(youTubePlayer: YouTubePlayer) {
+            override fun onReady(youTubePlayer: YouTubePlayerInterface) {
                 isYouTubePlayerReady = true
 
                 youTubePlayerCallbacks.forEach { it.onYouTubePlayer(youTubePlayer) }

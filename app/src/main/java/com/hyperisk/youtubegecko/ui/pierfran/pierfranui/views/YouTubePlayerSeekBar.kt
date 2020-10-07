@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.hyperisk.youtubegecko.R
 import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.PlayerConstants
-import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.YouTubePlayer
+import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.YouTubePlayerInterface
 import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.listeners.YouTubePlayerListener
 import com.hyperisk.youtubegecko.ui.pierfran.pierfranui.utils.TimeUtilities
 
@@ -114,12 +114,12 @@ class YouTubePlayerSeekBar(context: Context, attrs: AttributeSet? = null): Linea
 
     // YouTubePlayerListener
 
-    override fun onStateChange(youTubePlayer: YouTubePlayer, state: PlayerConstants.PlayerState) {
+    override fun onStateChange(youTubePlayer: YouTubePlayerInterface, state: PlayerConstants.PlayerState) {
         newSeekBarProgress = -1
         updateState(state)
     }
 
-    override fun onCurrentSecond(youTubePlayer: YouTubePlayer, second: Float) {
+    override fun onCurrentSecond(youTubePlayer: YouTubePlayerInterface, second: Float) {
         // ignore if the user is currently moving the SeekBar
         if (seekBarTouchStarted)
             return
@@ -132,24 +132,24 @@ class YouTubePlayerSeekBar(context: Context, attrs: AttributeSet? = null): Linea
         seekBar.progress = second.toInt()
     }
 
-    override fun onVideoDuration(youTubePlayer: YouTubePlayer, duration: Float) {
+    override fun onVideoDuration(youTubePlayer: YouTubePlayerInterface, duration: Float) {
         videoDurationTextView.text = TimeUtilities.formatTime(duration)
         seekBar.max = duration.toInt()
     }
 
-    override fun onVideoLoadedFraction(youTubePlayer: YouTubePlayer, loadedFraction: Float) {
+    override fun onVideoLoadedFraction(youTubePlayer: YouTubePlayerInterface, loadedFraction: Float) {
         if (showBufferingProgress)
             seekBar.secondaryProgress = (loadedFraction * seekBar.max).toInt()
         else
             seekBar.secondaryProgress = 0
     }
 
-    override fun onReady(youTubePlayer: YouTubePlayer) { }
-    override fun onVideoId(youTubePlayer: YouTubePlayer, videoId: String) { }
-    override fun onApiChange(youTubePlayer: YouTubePlayer) { }
-    override fun onPlaybackQualityChange(youTubePlayer: YouTubePlayer, playbackQuality: PlayerConstants.PlaybackQuality) { }
-    override fun onPlaybackRateChange(youTubePlayer: YouTubePlayer, playbackRate: PlayerConstants.PlaybackRate) { }
-    override fun onError(youTubePlayer: YouTubePlayer, error: PlayerConstants.PlayerError) { }
+    override fun onReady(youTubePlayer: YouTubePlayerInterface) { }
+    override fun onVideoId(youTubePlayer: YouTubePlayerInterface, videoId: String) { }
+    override fun onApiChange(youTubePlayer: YouTubePlayerInterface) { }
+    override fun onPlaybackQualityChange(youTubePlayer: YouTubePlayerInterface, playbackQuality: PlayerConstants.PlaybackQuality) { }
+    override fun onPlaybackRateChange(youTubePlayer: YouTubePlayerInterface, playbackRate: PlayerConstants.PlaybackRate) { }
+    override fun onError(youTubePlayer: YouTubePlayerInterface, error: PlayerConstants.PlayerError) { }
 }
 
 interface YouTubePlayerSeekBarListener {

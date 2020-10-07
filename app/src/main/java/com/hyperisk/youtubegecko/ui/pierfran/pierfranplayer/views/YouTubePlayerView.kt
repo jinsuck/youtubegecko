@@ -10,7 +10,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.hyperisk.youtubegecko.R
-import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.YouTubePlayer
+import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.YouTubePlayerInterface
 import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.listeners.AbstractYouTubePlayerListener
 import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.listeners.YouTubePlayerCallback
 import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.listeners.YouTubePlayerFullScreenListener
@@ -72,7 +72,7 @@ class YouTubePlayerView(context: Context, attrs: AttributeSet? = null, defStyleA
         }
 
         val youTubePlayerListener = object : AbstractYouTubePlayerListener() {
-            override fun onReady(youTubePlayer: YouTubePlayer) {
+            override fun onReady(youTubePlayer: YouTubePlayerInterface) {
                 videoId?.let {
                     youTubePlayer.loadOrCueVideo(legacyTubePlayerView.canPlay && autoPlay, videoId, 0f)
                 }

@@ -5,7 +5,7 @@ import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.listeners.YouTubePla
 /**
  * Use this interface to control the playback of YouTube videos and to listen to their events.
  */
-interface YouTubePlayer {
+interface YouTubePlayerInterface {
     /**
      * Loads and automatically plays the video.
      * @param videoId id of the video

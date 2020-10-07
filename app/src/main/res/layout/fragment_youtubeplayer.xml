@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/youtube_fragment_x"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/show_hide_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/youtube_fragment_x"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
+        android:text="show/hide"/>
+
+    <TextView
+        android:id="@+id/text_using"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/youtube_fragment_x"
+        app:layout_constraintStart_toEndOf="@id/show_hide_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="12sp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/cardview_dark_background"
+        android:text="The below is bitmaps copied from hidden WebView"/>
+
+    <ImageView
+        android:id="@+id/image_copy_pixel"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="#332244"
+        app:layout_constraintTop_toBottomOf="@id/text_using"/>
+
+    <!--    <FrameLayout-->
+    <!--        android:id="@+id/custom_view"-->
+    <!--        android:layout_width="300dp"-->
+    <!--        android:layout_height="200dp"-->
+    <!--        android:layout_marginTop="50dp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"/>-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,7 @@ import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import com.hyperisk.youtubegecko.R
-import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.YouTubePlayer
+import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.YouTubePlayerInterface
 import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.YouTubePlayerBridge
 import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.listeners.YouTubePlayerListener
 import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.options.IFramePlayerOptions
@@ -20,29 +20,29 @@ import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.utils.Utils
 import java.util.*
 
 /**
- * WebView implementation of [YouTubePlayer]. The player runs inside the WebView, using the IFrame Player API.
+ * WebView implementation of [YouTubePlayerInterface]. The player runs inside the WebView, using the IFrame Player API.
  */
 
 private const val TAG = "home/WebViewYouTubePlayer"
 
 internal class WebViewYouTubePlayer constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
-    : WebView(context, attrs, defStyleAttr), YouTubePlayer, YouTubePlayerBridge.YouTubePlayerBridgeCallbacks {
+    : WebView(context, attrs, defStyleAttr), YouTubePlayerInterface, YouTubePlayerBridge.YouTubePlayerBridgeCallbacks {
 
-    private lateinit var youTubePlayerInitListener: (YouTubePlayer) -> Unit
+    private lateinit var youTubePlayerInitListener: (YouTubePlayerInterface) -> Unit
 
     private val youTubePlayerListeners = HashSet<YouTubePlayerListener>()
     private val mainThreadHandler: Handler = Handler(Looper.getMainLooper())
 
     internal var isBackgroundPlaybackEnabled = false
 
-    internal fun initialize(initListener: (YouTubePlayer) -> Unit, playerOptions: IFramePlayerOptions?) {
+    internal fun initialize(initListener: (YouTubePlayerInterface) -> Unit, playerOptions: IFramePlayerOptions?) {
         youTubePlayerInitListener = initListener
         initWebView(playerOptions ?: IFramePlayerOptions.default)
     }
 
     override fun onYouTubeIFrameAPIReady() = youTubePlayerInitListener(this)
 
-    override fun getInstance(): YouTubePlayer = this
+    override fun getInstance(): YouTubePlayerInterface = this
 
     override fun loadVideo(videoId: String, startSeconds: Float) {
         Log.i(TAG, "loadVideo $startSeconds")

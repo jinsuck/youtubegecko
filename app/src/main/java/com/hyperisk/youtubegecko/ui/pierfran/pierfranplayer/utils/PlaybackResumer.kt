@@ -1,7 +1,7 @@
 package com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.utils
 
 import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.PlayerConstants
-import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.YouTubePlayer
+import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.YouTubePlayerInterface
 import com.hyperisk.youtubegecko.ui.pierfran.pierfranplayer.listeners.AbstractYouTubePlayerListener
 
 
@@ -18,7 +18,7 @@ internal class PlaybackResumer : AbstractYouTubePlayerListener() {
     private var currentVideoId: String? = null
     private var currentSecond: Float = 0f
 
-    fun resume(youTubePlayer: YouTubePlayer) {
+    fun resume(youTubePlayer: YouTubePlayerInterface) {
         currentVideoId?.let { videoId ->
             if (isPlaying && error == PlayerConstants.PlayerError.HTML_5_PLAYER)
                 youTubePlayer.loadOrCueVideo(canLoad, videoId, currentSecond)
@@ -29,7 +29,7 @@ internal class PlaybackResumer : AbstractYouTubePlayerListener() {
         error = null
     }
 
-    override fun onStateChange(youTubePlayer: YouTubePlayer, state: PlayerConstants.PlayerState) {
+    override fun onStateChange(youTubePlayer: YouTubePlayerInterface, state: PlayerConstants.PlayerState) {
         when (state) {
             PlayerConstants.PlayerState.ENDED -> {
                 isPlaying = false
@@ -47,16 +47,16 @@ internal class PlaybackResumer : AbstractYouTubePlayerListener() {
         }
     }
 
-    override fun onError(youTubePlayer: YouTubePlayer, error: PlayerConstants.PlayerError) {
+    override fun onError(youTubePlayer: YouTubePlayerInterface, error: PlayerConstants.PlayerError) {
         if (error == PlayerConstants.PlayerError.HTML_5_PLAYER)
             this.error = error
     }
 
-    override fun onCurrentSecond(youTubePlayer: YouTubePlayer, second: Float) {
+    override fun onCurrentSecond(youTubePlayer: YouTubePlayerInterface, second: Float) {
         currentSecond = second
     }
 
-    override fun onVideoId(youTubePlayer: YouTubePlayer, videoId: String) {
+    override fun onVideoId(youTubePlayer: YouTubePlayerInterface, videoId: String) {
         currentVideoId = videoId
     }
 

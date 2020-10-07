@@ -49,7 +49,7 @@ class YouTubePlayerBridge(private val youTubePlayerOwner: YouTubePlayerBridgeCal
     private val mainThreadHandler: Handler = Handler(Looper.getMainLooper())
 
     interface YouTubePlayerBridgeCallbacks {
-        fun getInstance(): YouTubePlayer
+        fun getInstance(): YouTubePlayerInterface
         fun getListeners(): Collection<YouTubePlayerListener>
         fun onYouTubeIFrameAPIReady()
     }
